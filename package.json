@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/tak-ps/tak-cloudformation/issues"
   },
-  "homepage": "https://github.com/tak-ps/tak-cloudformation#readme"
+  "homepage": "https://github.com/tak-ps/tak-cloudformation#readme",
+  "dependencies": {
+    "@openaddresses/deploy": "^7.0.0"
+  }
 }
