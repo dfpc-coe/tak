@@ -6,10 +6,6 @@ import s3 from './lib/s3.js';
 import api from './lib/api.js';
 import kms from './lib/kms.js';
 import vpc from './lib/vpc.js';
-import etl from './lib/etl.js';
-import sqs from './lib/sqs.js';
-import lambda from './lib/lambda.js';
-import titiler from './lib/titiler.js';
 import secret from './lib/secret.js';
 
 const base = {
@@ -28,15 +24,11 @@ export default cf.merge(
     api,
     kms,
     vpc,
-    etl,
-    sqs,
-    lambda,
     secret,
-    titiler,
     alarms({
-        prefix: 'RasterUpload',
+        prefix: 'Tak',
         apache: cf.stackName,
-        email: 'ingalls@developmentseed.org',
+        email: 'tak@ingalls.ca',
         cluster: cf.ref('ECSCluster'),
         service: cf.getAtt('Service', 'Name'),
         loadbalancer: cf.getAtt('ELB', 'LoadBalancerFullName'),

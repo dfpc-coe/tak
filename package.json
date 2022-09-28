@@ -1,22 +1,25 @@
 {
-  "name": "tak-cloudformation",
-  "version": "1.0.0",
-  "description": "Deploy TAK into an AWS Account via Cloudformation",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tak-ps/tak-cloudformation.git"
-  },
-  "author": "Nick Ingalls <nick@ingalls.ca>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tak-ps/tak-cloudformation/issues"
-  },
-  "homepage": "https://github.com/tak-ps/tak-cloudformation#readme",
-  "dependencies": {
-    "@openaddresses/deploy": "^7.0.0"
-  }
+    "name": "tak-cloudformation",
+    "type": "module",
+    "version": "1.0.0",
+    "description": "Deploy TAK into an AWS Account via Cloudformation",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tak-ps/tak-cloudformation.git"
+    },
+    "author": "Nick Ingalls <nick@ingalls.ca>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/tak-ps/tak-cloudformation/issues"
+    },
+    "homepage": "https://github.com/tak-ps/tak-cloudformation#readme",
+    "dependencies": {
+        "@mapbox/cloudfriend": "^5.1.1",
+        "@openaddresses/batch-alarms": "^2.1.4",
+        "@openaddresses/deploy": "^7.0.0"
+    }
 }

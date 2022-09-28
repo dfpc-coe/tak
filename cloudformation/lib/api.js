@@ -2,14 +2,6 @@ import cf from '@mapbox/cloudfriend';
 
 export default {
     Parameters: {
-        SigningSecret: {
-            Type: 'String',
-            Description: 'API Token Signing Secret'
-        },
-        FromEmailAddress: {
-            Type: 'String',
-            Description: 'Email address to be used to send emails'
-        },
         CertificateARN: {
             Type: 'String',
             Description: 'SSL Certificate ARN'
@@ -283,13 +275,8 @@ export default {
                                 '/uploader'
                             ])
                         },
-                        { Name: 'SecretARN', Value: cf.ref('APISecrets') },
-                        { Name: 'ASSET_BUCKET', Value: cf.ref('Bucket') },
-                        { Name: 'SigningSecret', Value: cf.ref('SigningSecret') },
                         { Name: 'StackName', Value: cf.stackName },
                         { Name: 'AWS_DEFAULT_REGION', Value: cf.region },
-                        { Name: 'TiTiler', Value: cf.join(['https://', cf.ref('TiTilerAPI'), '.execute-api.', cf.region, '.', cf.ref('AWS::URLSuffix'), '/']) },
-                        { Name: 'FROM_EMAIL_ADDRESS', Value: cf.ref('FromEmailAddress') },
                         { Name: 'FRONTEND_DOMAIN', Value: cf.ref('FrontEndDomain') }
                     ],
                     LogConfiguration: {
