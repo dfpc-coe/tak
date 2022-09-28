@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -euo pipefail
+
+docker build -t buildtak .
+
+docker run -it buildtak:latest bash&
+
+sleep 5
+
+IMAGE=$(docker ps | grep buildtak | tr ' ' '\t' | cut -f1)
+
+docker cp $IMAGE:/home/tak/Server/src/takserver-package/build/distributions/ .
+
+docker kill $IMAGE
+
+rm $(ls -dA ./distributions/* | grep -v rpm)
+
+mv $(ls -dA ./distributions/*.rpm) ./distributions/takserver.rpm

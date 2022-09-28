@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration xmlns="http://bbn.com/marti/xml/config"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="CoreConfig.xsd">
+<Configuration xmlns="http://bbn.com/marti/xml/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="CoreConfig.xsd">
     <network multicastTTL="5">
         <input _name="stdtcp" protocol="tcp" port="8087" auth="anonymous"/>
         <input _name="stdudp" protocol="udp" port="8087" auth="anonymous"/>
