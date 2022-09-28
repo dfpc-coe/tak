@@ -31,7 +31,7 @@ To install it globally - view the deploy [README](https://github.com/openaddress
 Deploy uses your existing devseed AWS credentials. Ensure that your `~/.aws/credentials`
 file looks like:
 ```
-[impact]
+[tak]
 aws_access_key_id = <redacted>
 aws_secret_access_key = <redacted>
 ```
