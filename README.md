@@ -2,6 +2,33 @@
 
 <p align=center>Deploy TAK into an AWS Account via Cloudformation</p>
 
+## Local
+
+Local testing can be accomplished by using the provided docker compose functionality.
+
+### First Run
+
+The first time the repo is setup, the TAK server must be built from source for use in the Server Dockerfile.
+
+```sh
+./build/build
+```
+
+Once completed, this will create the following file:
+
+```sh
+./build/distributions/takserver.rpm
+```
+
+This process only needs to be re-run if the TAK Server version is updated.
+
+### Subsequent Runs
+
+```sh
+docker-compose up
+
+```
+
 ## Deployment
 
 Deployment to AWS is handled via AWS Cloudformation. The template can be found in the `./cloudformation`
