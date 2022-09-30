@@ -20,6 +20,7 @@
     "dependencies": {
         "@mapbox/cloudfriend": "^5.1.1",
         "@openaddresses/batch-alarms": "^2.1.4",
-        "@openaddresses/deploy": "^7.0.0"
+        "@openaddresses/deploy": "^7.0.0",
+        "eslint": "^8.24.0"
     }
 }

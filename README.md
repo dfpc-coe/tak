@@ -22,11 +22,10 @@ Once completed, this will create the following file:
 
 This process only needs to be re-run if the TAK Server version is updated.
 
-### Subsequent Runs
+### Server
 
 ```sh
 docker-compose up
-
 ```
 
 ## Deployment

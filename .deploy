@@ -1,0 +1,15 @@
+{
+    "profile": "tak",
+    "artifacts": {
+        "docker": [
+            "{{project}}:{{gitsha}}"
+        ]
+    },
+    "tags": [{
+        "Key": "Project",
+        "Value": "tak"
+    },{
+        "Key": "Client",
+        "Value": "tak"
+    }]
+}

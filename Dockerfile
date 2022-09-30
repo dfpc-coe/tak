@@ -22,9 +22,16 @@ RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x
     && rpm -i takserver.rpm
 
 # --- Configure TAK Server ---
-COPY CoreConfig.xml /opts/tak/
+COPY assets/CoreConfig.xml /opt/tak/CoreConfig.xml
 
 WORKDIR /opt/tak
 
 # java -jar ./db-utils/SchemaManager.jar upgrade
-#
+# export STATE=co
+# export CITY=grand_junction
+# export ORGANIZATIONAL_UNIT=coe
+# cd certs
+# ./makeRootCa.sh
+# ./makeCert.sh server
+# mkdir /logs/
+# touch /logs/takserver-messaging.log

@@ -4,25 +4,7 @@
         <input _name="stdtcp" protocol="tcp" port="8087" auth="anonymous"/>
         <input _name="stdudp" protocol="udp" port="8087" auth="anonymous"/>
         <input _name="streamtcp" protocol="stcp" port="8088" auth="anonymous"/>
-        <!-- <input _name="SAproxy" protocol="mcast" group="239.2.3.1" port="6969" proxy="true" auth="anonymous" /> -->
-        <!-- <input _name="GeoChatproxy" protocol="mcast" group="224.10.10.1" port="17012" proxy="true" auth="anonymous" /> -->
-        <!--<announce enable="true" uid="Marti1" group="239.2.3.1" port="6969" interval="1" ip="192.168.1.137" />-->
-         <!--<input _name="stdssl" protocol="tls" port="8089"/>-->
-         <!--<input _name="sslauth" protocol="tls" port="8090" auth="ldap"/> -->
-        <!--<input _name="stdtcpwithgroups" protocol="tcp" port="8087" auth="anonymous">-->
-            <!--<filtergroup>group one</filtergroup>-->
-            <!--<filtergroup>group two</filtergroup>-->
-        <!--</input>-->
-        <!--<input _name="stdtcpwithfilters" protocol="tcp" port="8087" auth="anonymous">-->
-            <!--<filter>-->
-                <!--<geospatialFilter>-->
-                    <!--<boundingBox minLongitude="-80" minLatitude="34" maxLongitude="-70" maxLatitude="36" />-->
-                    <!--<boundingBox minLongitude="-100" minLatitude="34" maxLongitude="-90" maxLatitude="36" />-->
-                <!--</geospatialFilter>-->
-            <!--</filter>-->
-        <!--</input>-->
 
-        <!-- web connectors -->
         <connector port="8443" _name="https"/>
         <!-- <connector port="8451" _name="https" enableAdminUI="true" enableWebtak="false" /> -->
         <!-- <connector port="8452" _name="https" enableAdminUI="false" enableWebtak="true" /> -->

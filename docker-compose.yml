@@ -8,7 +8,9 @@ services:
         links:
             - postgis
         ports:
-            - "8444:8443"
+            - "8443:8443"
+            - "8446:8446"
+            - "8080:8080"
 
     postgis:
         platform: linux/amd64
