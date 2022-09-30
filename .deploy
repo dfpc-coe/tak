@@ -2,14 +2,14 @@
     "profile": "tak",
     "artifacts": {
         "docker": [
-            "{{project}}:{{gitsha}}"
+            "tak-server:{{gitsha}}"
         ]
     },
     "tags": [{
         "Key": "Project",
-        "Value": "tak"
+        "Value": "labs"
     },{
         "Key": "Client",
-        "Value": "tak"
+        "Value": "labs"
     }]
 }

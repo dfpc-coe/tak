@@ -7,7 +7,7 @@ EXPOSE 8080
 WORKDIR /home/tak
 
 RUN yum -y update \
-    && yum -y install git patch epel-release wget \
+    && yum -y install git patch epel-release wget psmisc \
                         java-11-openjdk java-11-openjdk-devel
 
 ENV LC_ALL en_US.UTF-8
@@ -24,14 +24,22 @@ RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x
 # --- Configure TAK Server ---
 COPY assets/CoreConfig.xml /opt/tak/CoreConfig.xml
 
+RUN mkdir /logs/ \
+    && touch /logs/takserver-messaging.log
+
 WORKDIR /opt/tak
 
 # java -jar ./db-utils/SchemaManager.jar upgrade
+#
 # export STATE=co
 # export CITY=grand_junction
 # export ORGANIZATIONAL_UNIT=coe
 # cd certs
 # ./makeRootCa.sh
-# ./makeCert.sh server
-# mkdir /logs/
-# touch /logs/takserver-messaging.log
+# ./makeCert.sh server takserver
+# ./makeCert.sh client admin
+# cd ..
+# ./start.sh
+#
+# java -jar ./utils/UserManager.jar usermod -A -p 1amTheDefaultPassword default
+# java -jar utils/UserManager.jar certmod -A certs/files/admin.pem

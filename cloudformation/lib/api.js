@@ -257,7 +257,7 @@ export default {
                 TaskRoleArn: cf.getAtt('TaskRole', 'Arn'),
                 ContainerDefinitions: [{
                     Name: 'api',
-                    Image: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/raster-uploader:', cf.ref('GitSha')]),
+                    Image: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/tak:', cf.ref('GitSha')]),
                     PortMappings: [{
                         ContainerPort: 5000
                     }],
