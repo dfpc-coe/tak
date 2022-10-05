@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration xmlns="http://bbn.com/marti/xml/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="CoreConfig.xsd">
+    <buffer
+        igniteHost="ignite"
+    >
+        <latestSA enable="true"/>
+        <queue/>
+    </buffer>
+
     <network multicastTTL="5">
         <input _name="stdtcp" protocol="tcp" port="8087" auth="anonymous"/>
         <input _name="stdudp" protocol="udp" port="8087" auth="anonymous"/>
@@ -16,35 +23,7 @@
         <connector port="8080" tls="false" _name="http_plaintext"/>
     </network>
     <auth>
-                <!-- Example OpenLDAP -->
-        <!--
-        <ldap
-            url="ldap://hostname.bbn.com/"
-            userstring="uid={username},ou=People,dc=XXX,dc=bbn,dc=com"
-            updateinterval="60"
-            style="DS"
-        />
-        -->
-
-        <!-- Example ActiveDirectory -->
-
-        <!--NOTE!! In the example below, GroupBaseDN should be specified relative to the naming context provided in the url attribute below -->
-        <!--
-        <ldap
-            url="ldap://hostname.bbn.com/dc=XXX,dc=bbn,dc=com"
-            userstring="DOMAIN\{username}"
-            updateinterval="60"
-            groupprefix=""
-            style="AD"
-            ldapSecurityType="simple"
-            serviceAccountDN="cn=fred001,cn=Users,cn=Partition1,dc=XYZ,dc=COM"
-            serviceAccountCredential="XXXXXX"
-            groupObjectClass="group"
-            groupBaseRDN="CN=Groups"/>
-        />
-
-        -->
-            <File location="UserAuthenticationFile.xml"/>
+        <File location="UserAuthenticationFile.xml"/>
     </auth>
     <submission ignoreStaleMessages="false" validateXml="false"/>
 
@@ -70,84 +49,15 @@
     <filter>
         <flowtag enable="true" text=""/>
         <streamingbroker enable="true"/>
-        <!--
-        <injectionfilter enable="false"/>
-        <dropfilter>
-            <typefilter type="u-d-p" />
-            <typefilter type="u-d-c" />
-        </dropfilter>
-        -->
         <scrubber enable="false" action="overwrite"/>
     </filter>
-
-    <buffer>
-        <latestSA enable="true"/>
-        <queue/>
-    </buffer>
 
     <security>
         <tls context="TLSv1.2"
             keymanager="SunX509"
             keystore="JKS" keystoreFile="certs/files/takserver.jks" keystorePass="atakatak"
             truststore="JKS" truststoreFile="certs/files/truststore-root.jks" truststorePass="atakatak">
-         <!-- <crl _name="TAKServer CA" crlFile="certs/files/ca.crl"/>  -->
-
         </tls>
-
-         <!-- previous locations of keystore and truststore -->
-         <!--
-         <tls context="TLSv1.2"
-            keymanager="SunX509"
-            keystore="JKS" keystoreFile="certs/TAKServer.jks" keystorePass="atakatak"
-            truststore="JKS" truststoreFile="certs/truststore.jks" truststorePass="atakatak">
-        </tls>
-        -->
-
     </security>
-
-<!--
-    <federation>
-      <federation-server port="9000">
-        <tls context="TLSv1.2"
-         keymanager="SunX509"
-         keystore="JKS" keystoreFile="certs/files/takserver.jks" keystorePass="atakatak"
-         truststore="JKS" truststoreFile="certs/files/fed-truststore.jks" truststorePass="atakatak"/>
-      </federation-server>
-    </federation>
--->
- <!-- previous locations of federate keystore and truststore -->
- <!--
- <tls context="TLSv1.2"
-         keymanager="SunX509"
-         keystore="JKS" keystoreFile="certs/TAKServer.jks" keystorePass="atakatak"
-         truststore="JKS" truststoreFile="certs/fed-truststore.jks" truststorePass="atakatak"/>
- -->
-
-<!--
-
-<certificateSigning CA="{TAKServer | MicrosoftCA}">
-    <certificateConfig>
-        <nameEntries>
-            <nameEntry name="O" value="Test Org Name"/>
-            <nameEntry name="OU" value="Test Org Unit Name"/>
-        </nameEntries>
-    </certificateConfig>
-    <TAKServerCAConfig
-        keystore="JKS"
-        keystoreFile="certs/files/intermediate-ca-signing.jks"
-        keystorePass="atakatak"
-        validityDays="30"
-        signatureAlg="SHA256WithRSA" />
-    <MicrosoftCAConfig
-        username="{MS CA Username}"
-        password="{MS CA Password}"
-        truststore="/opt/tak/certs/files/keystore.jks"
-        truststorePass="atakatak"
-        svcUrl="https://{server}/{CA name}_CES_UsernamePassword/service.svc"
-        templateName="Copy of User"/>
-</certificateSigning>
-
--->
-
 </Configuration>
 
