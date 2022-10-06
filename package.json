@@ -1,7 +1,10 @@
 {
     "name": "tak-cloudformation",
     "type": "module",
+    "license": "MIT",
     "version": "1.0.0",
+    "author": "Nick Ingalls <nick@ingalls.ca>",
+    "homepage": "https://github.com/tak-ps/tak-cloudformation#readme",
     "description": "Deploy TAK into an AWS Account via Cloudformation",
     "main": "index.js",
     "scripts": {
@@ -11,21 +14,18 @@
         "type": "git",
         "url": "git+https://github.com/tak-ps/tak-cloudformation.git"
     },
-    "author": "Nick Ingalls <nick@ingalls.ca>",
-    "license": "ISC",
     "bugs": {
         "url": "https://github.com/tak-ps/tak-cloudformation/issues"
     },
-    "homepage": "https://github.com/tak-ps/tak-cloudformation#readme",
     "dependencies": {
-        "@mapbox/cloudfriend": "^5.1.1",
-        "@openaddresses/batch-alarms": "^2.1.4",
-        "@openaddresses/deploy": "^7.0.0",
-        "eslint-plugin-node": "^11.1.0",
         "node-fetch": "^3.2.10",
         "zx": "^7.1.0"
     },
     "devDependencies": {
-        "eslint": "^8.24.0"
+        "eslint": "^8.24.0",
+        "@mapbox/cloudfriend": "^5.1.1",
+        "@openaddresses/batch-alarms": "^2.1.4",
+        "@openaddresses/deploy": "^7.0.0",
+        "eslint-plugin-node": "^11.1.0"
     }
 }
