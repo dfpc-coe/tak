@@ -107,14 +107,6 @@ export default {
                                 cf.join(['arn:aws:s3:::', cf.ref('Bucket'), '/*'])
                             ]
                         },{
-                            Effect: 'Allow', // Password Reset & User Validation
-                            Action: [
-                                'ses:SendEmail'
-                            ],
-                            Resource: [
-                                cf.join(['arn:aws:ses:', cf.region, ':', cf.accountId, ':identity/*'])
-                            ]
-                        },{
                             Effect: 'Allow', // API Stack Secrets
                             Action: [
                                 'secretsmanager:Describe*',
@@ -138,38 +130,6 @@ export default {
                             ],
                             Resource: [
                                 cf.join(['arn:aws:secretsmanager:', cf.region, ':', cf.accountId, ':secret:', cf.stackName, '-*'])
-                            ]
-                        },{
-                            Effect: 'Allow', // Performing work on rasters
-                            Action: [
-                                'sqs:ChangeMessageVisibility',
-                                'sqs:DeleteMessage',
-                                'sqs:GetQueueAttributes',
-                                'sqs:GetQueueUrl',
-                                'sqs:ListDeadLetterSourceQueues',
-                                'sqs:PurgeQueue',
-                                'sqs:SendMessage'
-                            ],
-                            Resource: [
-                                cf.getAtt('Queue', 'Arn'),
-                                cf.getAtt('DeadQueue', 'Arn'),
-                                cf.getAtt('ObtainQueue', 'Arn'),
-                                cf.getAtt('TransformQueue', 'Arn')
-                            ]
-                        },{
-                            Effect: 'Allow', // Create events for scheduled uploads
-                            Action: [
-                                'events:PutRule',
-                                'events:DescribeRule',
-                                'events:ListRules',
-                                'events:PutTargets',
-                                'events:RemoveTargets',
-                                'events:DisableRule',
-                                'events:EnableRule',
-                                'events:DeleteRule'
-                            ],
-                            Resource: [
-                                cf.join(['arn:aws:events:', cf.region, ':', cf.accountId, ':rule/', cf.stackName, '-*'])
                             ]
                         }]
                     }
