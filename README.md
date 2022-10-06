@@ -54,7 +54,7 @@ npx deploy
 
 To install it globally - view the deploy [README](https://github.com/openaddresses/deploy)
 
-Deploy uses your existing devseed AWS credentials. Ensure that your `~/.aws/credentials`
+Deploy uses your existing AWS credentials. Ensure that your `~/.aws/credentials`
 file looks like:
 ```
 [tak]
