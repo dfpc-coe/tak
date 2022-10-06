@@ -2,7 +2,7 @@
 
 <p align=center>Deploy TAK into an AWS Account via Cloudformation</p>
 
-## Deployment
+## AWS Deployment
 
 ### Deployment Tools
 
@@ -13,6 +13,7 @@ There are two methods to deploy the stack, either via [Deploy](https://github.co
 cloudformation template.
 
 Deploy comes pre-installed in the repository and can be run via:
+
 ```sh
 npx deploy
 ```
@@ -47,6 +48,24 @@ npx deploy create <stackname>
 
 ```
 npx deploy update <stackname>
+```
+
+### Deleting a TAK Server
+
+```
+npx deploy delete <stackname>
+```
+
+### TAK Server Info
+
+```
+npx deploy info <stackname> --outputs
+```
+
+### Deploy Help & Other Commands
+
+```
+deploy --help
 ```
 
 ### Manual Deploys

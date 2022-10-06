@@ -7,17 +7,11 @@ services:
         restart: always
         links:
             - postgis
-            - ignite
         ports:
             - "8443:8443"
             - "8444:8444"
             - "8446:8446"
             - "8080:8080"
-
-    ignite:
-        platform: linux/amd64
-        restart: always
-        image: apacheignite/ignite:2.13.0
 
     postgis:
         platform: linux/amd64
