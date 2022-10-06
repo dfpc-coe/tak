@@ -4,6 +4,7 @@ import { $ } from 'zx';
 import Cert from './lib/certs.js';
 import DB from './lib/db.js'
 import User from './lib/user.js'
+import fetch from 'node-fetch';
 
 /**
  * @class
@@ -57,6 +58,14 @@ class TAKServer {
 
         $`java -Dspring.profiles.active=messaging,duplicatelogs -jar takserver.war&`;
         $`java -Dspring.profiles.active=api,duplicatelogs -jar takserver.war&`;
+
+        do {
+            await delay(1000)
+
+            const res = await fetch('http://127.0.0.1:8080');
+
+            console.error(res);
+        } while(true)
     }
 }
 
@@ -70,3 +79,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     TAKServer.configure();
 }
 
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
