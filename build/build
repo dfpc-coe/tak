@@ -2,18 +2,28 @@
 
 set -euo pipefail
 
-docker build -t buildtak .
+CURRENT='4.7-RELEASE-32'
 
-docker run -it buildtak:latest bash&
+EXISTS=$(curl -LI https://github.com/tak-ps/tak/releases/download/${CURRENT}/takserver.rpm | grep "application/octet-stream")
 
-sleep 5
+if [[ -z $EXISTS ]]; then
 
-IMAGE=$(docker ps | grep buildtak | tr ' ' '\t' | cut -f1)
+    docker build –build-arg CURRENT=$CURRENT -t buildtak .
 
-docker cp $IMAGE:/home/tak/Server/src/takserver-package/build/distributions/ .
+    docker run -it buildtak:latest bash&
 
-docker kill $IMAGE
+    sleep 5
 
-rm $(ls -dA ./distributions/* | grep -v rpm)
+    IMAGE=$(docker ps | grep buildtak | tr ' ' '\t' | cut -f1)
 
-mv $(ls -dA ./distributions/*.rpm) ./distributions/takserver.rpm
+    docker cp $IMAGE:/home/tak/Server/src/takserver-package/build/distributions/ .
+
+    docker kill $IMAGE
+
+    rm $(ls -dA ./distributions/* | grep -v rpm)
+
+    mv $(ls -dA ./distributions/*.rpm) ./distributions/takserver.rpm
+else
+    curl -L https://github.com/tak-ps/tak/releases/download/${CURRENT}/takserver.rpm > ./distributions/takserver.rpm
+
+fi
