@@ -46,6 +46,8 @@ class TAKServer {
 
         await server.start();
 
+        await Cert.activate('default');
+
         // TODO Lookup Root User Password from secret!
         await User.password('root', 'Bugaboos2022!AlpineCl1mbing');
     }
