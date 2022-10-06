@@ -7,8 +7,8 @@ EXPOSE 8080
 WORKDIR /home/tak
 
 RUN yum -y update \
-    && yum -y install git patch epel-release wget psmisc \
-                        java-11-openjdk java-11-openjdk-devel
+    && yum -y install git patch epel-release wget psmisc nginx \
+                        java-11-openjdk java-11-openjdk-devel glibc
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -22,12 +22,16 @@ RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x
     && rpm -i takserver.rpm
 
 # --- Configure TAK Server ---
+WORKDIR /opt/tak
+
+COPY . ./tak-ps/
 COPY assets/CoreConfig.xml /opt/tak/CoreConfig.xml
 
-RUN mkdir /logs/ \
-    && touch /logs/takserver-messaging.log
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
+    && source ~/.bashrc \
+    && nvm install 18
 
-WORKDIR /opt/tak
+CMD ["node", "./tak-ps/start.js"]
 
 # java -jar ./db-utils/SchemaManager.jar upgrade
 #

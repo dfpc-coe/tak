@@ -1,10 +1,17 @@
 #!/usr/bin/env node
 import AWS from 'aws-sdk';
+import CP from 'child_process';
 
+/**
+ * @class
+ *
+ * @prop {String} bucket    - S3 Bucket for Config Objects
+ * @prop {String} stack     - Cloudformation StackName
+ */
 class TAKServer {
-    constructor(bucket, stack_name) {
+    constructor(bucket, stack) {
         this.bucket = bucket;
-        this.stack_name = stack_name;
+        this.stack = stack;
         this.config = null;
     }
 
@@ -15,11 +22,15 @@ class TAKServer {
 
         const server = new TAKServer(process.env.ConfigBucket, process.env.StackName);
 
+        const nginx = CP.spawn('nginx');
+        nginx.stdout.pipe(process.stdout);
+        nginx.stderr.pipe(process.stderr);
+
         const s3 = new AWS.S3({ region: process.env.AWS_DEFAULT_REGION || 'us-east-1' });
 
         const head = await s3.headObject({
-            Bucket: process.env.ConfigBucket,
-            Key: 'config.json'
+            Bucket: server.bucket,
+            Key: `${server.stack}/config.json`
         }).promise();
 
         console.error(head);

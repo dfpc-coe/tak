@@ -56,9 +56,9 @@ export default {
             Type: 'AWS::ElasticLoadBalancingV2::TargetGroup',
             DependsOn: 'ELB',
             Properties: {
-                HealthCheckEnabled: false, //TODO RE-ENABLE
+                HealthCheckEnabled: true,
                 HealthCheckIntervalSeconds: 30,
-                HealthCheckPath: '/api',
+                HealthCheckPath: '/healthy',
                 Port: 5000,
                 Protocol: 'HTTP',
                 TargetType: 'ip',
