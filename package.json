@@ -5,8 +5,7 @@
     "description": "Deploy TAK into an AWS Account via Cloudformation",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "lint": "scripts/*.js"
+        "lint": "start.js lib/*.js scripts/*.js"
     },
     "repository": {
         "type": "git",
@@ -22,7 +21,8 @@
         "@mapbox/cloudfriend": "^5.1.1",
         "@openaddresses/batch-alarms": "^2.1.4",
         "@openaddresses/deploy": "^7.0.0",
-        "eslint-plugin-node": "^11.1.0"
+        "eslint-plugin-node": "^11.1.0",
+        "zx": "^7.1.0"
     },
     "devDependencies": {
         "eslint": "^8.24.0"

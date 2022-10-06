@@ -35,21 +35,11 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && source ~/.bashrc \
     && nvm install 16 \
     && cd tak-ps \
-    && npm install
+    && npm install \
+    && ln -s $(which node) /usr/bin/ \
+    && ln -s $(which npm) /usr/bin/
 
 CMD ["node", "./tak-ps/start.js"]
 
-# java -jar ./db-utils/SchemaManager.jar upgrade
-#
-# export STATE=co
-# export CITY=grand_junction
-# export ORGANIZATIONAL_UNIT=coe
-# cd certs
-# ./makeRootCa.sh
-# ./makeCert.sh server takserver
-# ./makeCert.sh client admin
-# cd ..
-# ./start.sh
-#
 # java -jar ./utils/UserManager.jar usermod -A -p 1amTheDefaultPassword default
 # java -jar utils/UserManager.jar certmod -A certs/files/admin.pem

@@ -13,6 +13,21 @@ const base = {
         GitSha: {
             Type: 'String',
             Description: 'GitSha to Deploy'
+        },
+        State: {
+            Type: 'String',
+            Description: 'Required for certificate usage',
+            Default: 'default'
+        },
+        State: {
+            Type: 'String',
+            Description: 'Required for certificate usage',
+            Default: 'default'
+        },
+        Organization: {
+            Type: 'String',
+            Description: 'Required for certificate usage',
+            Default: 'default'
         }
     }
 };
