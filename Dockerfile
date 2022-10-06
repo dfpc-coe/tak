@@ -27,9 +27,14 @@ WORKDIR /opt/tak
 COPY . ./tak-ps/
 COPY assets/CoreConfig.xml /opt/tak/CoreConfig.xml
 
+COPY assets/nginx-core.conf /etc/nginx/nginx.conf
+COPY assets/nginx-health.conf /etc/nginx/sites-enabled/healthy.conf
+
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
     && source ~/.bashrc \
-    && nvm install 18
+    && nvm install 16 \
+    && cd tak-ps \
+    && npm install
 
 CMD ["node", "./tak-ps/start.js"]
 
