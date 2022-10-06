@@ -40,14 +40,14 @@ class TAKServer {
         await Cert.root(server);
 
         await Cert.gen('server', 'takserver');
-        await Cert.gen('client', 'admin');
+        await Cert.gen('client', 'default');
 
         await DB.upgrade();
 
         await server.start();
 
         // TODO Lookup Root User Password from secret!
-        await User.password('default', 'Bugaboos2022!AlpineCl1mbing');
+        await User.password('root', 'Bugaboos2022!AlpineCl1mbing');
     }
 
     async start() {
