@@ -59,7 +59,8 @@ export default {
                 HealthCheckEnabled: true,
                 HealthCheckIntervalSeconds: 30,
                 HealthCheckPath: '/healthy',
-                Port: 5000,
+                HealthCheckPort: 8081,
+                Port: 8080,
                 Protocol: 'HTTP',
                 TargetType: 'ip',
                 VpcId: cf.ref('VPC'),
@@ -190,7 +191,7 @@ export default {
                     Name: 'api',
                     Image: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/tak:', cf.ref('GitSha')]),
                     PortMappings: [{
-                        ContainerPort: 5000
+                        ContainerPort: 8080
                     }],
                     Environment: [
                         { Name: 'StackName', Value: cf.stackName },

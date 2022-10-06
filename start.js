@@ -22,10 +22,6 @@ class TAKServer {
 
         const server = new TAKServer(process.env.ConfigBucket, process.env.StackName);
 
-        const nginx = CP.spawn('nginx');
-        nginx.stdout.pipe(process.stdout);
-        nginx.stderr.pipe(process.stderr);
-
         const s3 = new AWS.S3({ region: process.env.AWS_DEFAULT_REGION || 'us-east-1' });
 
         const head = await s3.headObject({
@@ -38,6 +34,10 @@ class TAKServer {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
+    const nginx = CP.spawn('nginx');
+    nginx.stdout.pipe(process.stdout);
+    nginx.stderr.pipe(process.stderr);
+
     TAKServer.configure();
 }
 
