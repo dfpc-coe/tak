@@ -40,6 +40,3 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && ln -s $(which npm) /usr/bin/
 
 CMD ["node", "./tak-ps/start.js"]
-
-# java -jar ./utils/UserManager.jar usermod -A -p 1amTheDefaultPassword default
-# java -jar utils/UserManager.jar certmod -A certs/files/admin.pem

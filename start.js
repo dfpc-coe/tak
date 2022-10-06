@@ -2,6 +2,8 @@
 import AWS from 'aws-sdk';
 import { $ } from 'zx';
 import Cert from './lib/certs.js';
+import DB from './lib/db.js'
+import User from './lib/user.js'
 
 /**
  * @class
@@ -32,12 +34,20 @@ class TAKServer {
         }).promise();
         */
 
+        //TODO:
+        //- Get Root User Secret
+
         await Cert.root(server);
 
         await Cert.gen('server', 'takserver');
         await Cert.gen('client', 'admin');
 
+        await DB.upgrade();
+
         await server.start();
+
+        // TODO Lookup Root User Password from secret!
+        await User.password('default', 'Bugaboos2022!AlpineCl1mbing');
     }
 
     async start() {
