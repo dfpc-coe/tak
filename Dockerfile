@@ -1,8 +1,7 @@
 FROM centos:centos7
 
-EXPOSE 8443
-EXPOSE 8446
 EXPOSE 8080
+EXPOSE 8081
 
 WORKDIR /home/tak
 
