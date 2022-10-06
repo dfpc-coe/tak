@@ -1,16 +1,6 @@
 import cf from '@mapbox/cloudfriend';
 
 export default {
-    Parameters: {
-        CertificateARN: {
-            Type: 'String',
-            Description: 'SSL Certificate ARN'
-        },
-        FrontEndDomain: {
-            Type: 'String',
-            Description: 'Domain at which the frontend resides'
-        }
-    },
     Resources: {
         Logs: {
             Type: 'AWS::Logs::LogGroup',
@@ -54,38 +44,19 @@ export default {
             Type: 'AWS::ElasticLoadBalancingV2::Listener',
             Properties: {
                 DefaultActions: [{
-                    Type: 'redirect',
-                    RedirectConfig: {
-                        Protocol: 'HTTPS',
-                        StatusCode: 'HTTP_301',
-                        Port: 443
-                    }
+                    Type: 'forward',
+                    TargetGroupArn: cf.ref('TargetGroup')
                 }],
                 LoadBalancerArn: cf.ref('ELB'),
                 Port: 80,
                 Protocol: 'HTTP'
             }
         },
-        HttpsListener: {
-            Type: 'AWS::ElasticLoadBalancingV2::Listener',
-            Properties: {
-                DefaultActions: [{
-                    Type: 'forward',
-                    TargetGroupArn: cf.ref('TargetGroup')
-                }],
-                Certificates: [{
-                    CertificateArn: cf.ref('CertificateARN')
-                }],
-                LoadBalancerArn: cf.ref('ELB'),
-                Port: 443,
-                Protocol: 'HTTPS'
-            }
-        },
         TargetGroup: {
             Type: 'AWS::ElasticLoadBalancingV2::TargetGroup',
             DependsOn: 'ELB',
             Properties: {
-                HealthCheckEnabled: true,
+                HealthCheckEnabled: false, //TODO RE-ENABLE
                 HealthCheckIntervalSeconds: 30,
                 HealthCheckPath: '/api',
                 Port: 5000,
@@ -262,22 +233,9 @@ export default {
                         ContainerPort: 5000
                     }],
                     Environment: [
-                        {
-                            Name: 'POSTGRES',
-                            Value: cf.join([
-                                'postgresql://uploader',
-                                ':',
-                                cf.ref('DatabasePassword'),
-                                '@',
-                                cf.getAtt('DBInstanceVPC', 'Endpoint.Address'),
-                                ':',
-                                cf.getAtt('DBInstanceVPC', 'Endpoint.Port'),
-                                '/uploader'
-                            ])
-                        },
                         { Name: 'StackName', Value: cf.stackName },
-                        { Name: 'AWS_DEFAULT_REGION', Value: cf.region },
-                        { Name: 'FRONTEND_DOMAIN', Value: cf.ref('FrontEndDomain') }
+                        { Name: 'ConfigBucket', Value: cf.ref('Bucket') },
+                        { Name: 'AWS_DEFAULT_REGION', Value: cf.region }
                     ],
                     LogConfiguration: {
                         LogDriver: 'awslogs',
@@ -313,7 +271,7 @@ export default {
                 },
                 LoadBalancers: [{
                     ContainerName: 'api',
-                    ContainerPort: 5000,
+                    ContainerPort: 8080,
                     TargetGroupArn: cf.ref('TargetGroup')
                 }]
             }
@@ -326,8 +284,8 @@ export default {
                 SecurityGroupIngress: [{
                     CidrIp: '0.0.0.0/0',
                     IpProtocol: 'tcp',
-                    FromPort: 5000,
-                    ToPort: 5000
+                    FromPort: 80,
+                    ToPort: 8080
                 }]
             }
         }

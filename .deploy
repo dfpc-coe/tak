@@ -2,7 +2,7 @@
     "profile": "tak",
     "artifacts": {
         "docker": [
-            "tak-server:{{gitsha}}"
+            "tak:{{gitsha}}"
         ]
     },
     "tags": [{
