@@ -5,6 +5,8 @@ services:
         platform: linux/amd64
         build: .
         restart: always
+        environment:
+            - StackName=local
         links:
             - postgis
         ports:
