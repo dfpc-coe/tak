@@ -19,7 +19,7 @@ const base = {
             Description: 'Required for certificate usage',
             Default: 'default'
         },
-        State: {
+        City: {
             Type: 'String',
             Description: 'Required for certificate usage',
             Default: 'default'

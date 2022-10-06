@@ -12,13 +12,31 @@ export default {
                 'db.t3.medium',
                 'db.t3.large'
             ]
-        },
-        DatabasePassword: {
-            Type: 'String',
-            Description: '[secure] Database Password'
         }
     },
     Resources: {
+        DBMasterSecret: {
+            Type: 'AWS::SecretsManager::Secret',
+            Properties: {
+                Description: cf.join([cf.stackName, ' RDS Master Password']),
+                GenerateSecretString: {
+                    SecretStringTemplate: '{"username": "martiuser"}',
+                    GenerateStringKey: 'password',
+                    ExcludePunctuation: true,
+                    PasswordLength: 32
+                },
+                Name: cf.join([cf.stackName, '/rds/secret']),
+                KmsKeyId: cf.ref('KMS')
+            }
+        },
+        DBMasterSecretAttachment: {
+            Type: 'AWS::SecretsManager::SecretTargetAttachment',
+            Properties: {
+                SecretId: cf.ref('DBMasterSecret'),
+                TargetId: cf.ref('DBInstanceVPC'),
+                TargetType: 'AWS::RDS::DBInstance'
+            }
+        }
         DBInstanceVPC: {
             Type: 'AWS::RDS::DBInstance',
             Properties: {
@@ -28,8 +46,8 @@ export default {
                 DBInstanceIdentifier: cf.stackName,
                 KmsKeyId: cf.ref('KMS'),
                 EngineVersion: '14.2',
-                MasterUsername: 'uploader',
-                MasterUserPassword: cf.ref('DatabasePassword'),
+                MasterUsername: cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:username:AWSCURRENT}}'),
+                MasterUserPassword: cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:password:AWSCURRENT}}'),
                 AllocatedStorage: 10,
                 MaxAllocatedStorage: 100,
                 BackupRetentionPeriod: 10,

@@ -7,6 +7,7 @@ services:
         restart: always
         environment:
             - StackName=local
+            - POSTGRES=postgres://martiuser:local123@postgis:5432/cot
         links:
             - postgis
         ports:

@@ -58,7 +58,6 @@ export default {
             Properties: {
                 HealthCheckEnabled: true,
                 HealthCheckIntervalSeconds: 30,
-                HealthCheckGracePeriodSeconds: 60,
                 HealthCheckPath: '/healthy',
                 HealthCheckPort: 8081,
                 Port: 8080,
@@ -197,6 +196,18 @@ export default {
                     Environment: [
                         { Name: 'StackName', Value: cf.stackName },
                         { Name: 'ConfigBucket', Value: cf.ref('Bucket') },
+                        { Name: 'POSTGRES', Value: cf.join([
+                            'postgresql://',
+                            cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:username:AWSCURRENT}}'),
+                            ':',
+                            cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:password:AWSCURRENT}}'),
+                            '@',
+                            cf.getAtt('DBInstanceVPC', 'Endpoint.Address'),
+                            ':5432/cot'
+                        ]) },
+                        { Name: 'STATE', Value: cf.ref('State') },
+                        { Name: 'CITY', Value: cf.ref('City') },
+                        { Name: 'ORGANIZATIONAL_UNIT', Value: cf.ref('Organization') },
                         { Name: 'AWS_DEFAULT_REGION', Value: cf.region }
                     ],
                     LogConfiguration: {

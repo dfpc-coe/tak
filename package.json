@@ -18,14 +18,15 @@
         "url": "https://github.com/tak-ps/tak-cloudformation/issues"
     },
     "dependencies": {
+        "fast-xml-parser": "^4.0.11",
         "node-fetch": "^3.2.10",
         "zx": "^7.1.0"
     },
     "devDependencies": {
-        "eslint": "^8.24.0",
         "@mapbox/cloudfriend": "^5.1.1",
         "@openaddresses/batch-alarms": "^2.1.4",
         "@openaddresses/deploy": "^7.0.0",
+        "eslint": "^8.24.0",
         "eslint-plugin-node": "^11.1.0"
     }
 }
