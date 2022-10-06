@@ -58,6 +58,7 @@ export default {
             Properties: {
                 HealthCheckEnabled: true,
                 HealthCheckIntervalSeconds: 30,
+                HealthCheckGracePeriodSeconds: 60,
                 HealthCheckPath: '/healthy',
                 HealthCheckPort: 8081,
                 Port: 8080,

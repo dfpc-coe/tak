@@ -54,6 +54,8 @@ class TAKServer {
     }
 
     async start() {
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+
         process.env.JDK_JAVA_OPTIONS="-Dloader.path=WEB-INF/lib-provided,WEB-INF/lib,WEB-INF/classes,file:lib/ -Djava.net.preferIPv4Stack=true -Djava.security.egd=file:/dev/./urandom -DIGNITE_UPDATE_NOTIFIER=false -DIGNITE_QUIET=false"
 
         $`java -Dspring.profiles.active=messaging,duplicatelogs -jar takserver.war&`;
@@ -62,10 +64,18 @@ class TAKServer {
         do {
             await delay(1000)
 
-            const res = await fetch('http://127.0.0.1:8080');
+            try {
+                console.log('ok - checking server status...');
+                const res = await fetch('http://127.0.0.1:8080/index.html');
 
-            console.error(res);
+                console.log(`ok - server returned: ${res.status}`);
+                if (res.status === 200) break;
+            } catch (err) {
+                console.log(`ok - server returned error: ${err.message}`);
+            }
         } while(true)
+
+        console.log('ok - server started!');
     }
 }
 
@@ -78,5 +88,3 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
     TAKServer.configure();
 }
-
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
