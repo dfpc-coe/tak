@@ -83,7 +83,14 @@ class TAKServer {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-    await $`nginx`;
+    try {
+        console.log('ok - checking nginx status...');
+        const res = await fetch('http://127.0.0.1:8081/healthy');
+        console.log(`ok - server returned: ${res.status}`);
+        if (res.status !== 200) throw new Error('nginx not running');
+    } catch (err) {
+        await $`nginx`;
+    }
 
     process.env.StackName = process.env.StackName || 'local';
     process.env.STATE = process.env.STATE || 'default';
