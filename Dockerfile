@@ -7,7 +7,7 @@ EXPOSE 8080
 WORKDIR /home/tak
 
 RUN yum -y update \
-    && yum -y install git patch epel-release wget psmisc nginx \
+    && yum -y install git patch epel-release wget psmisc \
                         java-11-openjdk java-11-openjdk-devel glibc
 
 ENV LC_ALL en_US.UTF-8
@@ -29,6 +29,8 @@ COPY assets/CoreConfig.xml /opt/tak/CoreConfig.xml
 
 COPY assets/nginx-core.conf /etc/nginx/nginx.conf
 COPY assets/nginx-health.conf /etc/nginx/sites-enabled/healthy.conf
+
+RUN yum install -y nginx
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
     && source ~/.bashrc \
