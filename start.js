@@ -35,6 +35,8 @@ class TAKServer {
 
         await server.config.postgres(process.env.POSTGRES);
 
+        await Cert.root();
+
         await Cert.gen('client', 'default');
 
         await DB.upgrade();
@@ -96,7 +98,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     process.env.STATE = process.env.STATE || 'default';
     process.env.CITY = process.env.STATE || 'default';
     process.env.ORGANIZATIONAL_UNIT = process.env.STATE || 'default';
-    process.env.POSTGRES = process.env.POSTGRES || 'postgres://martiuser:local123@localhost:5432/cot';
+    process.env.POSTGRES = process.env.POSTGRES || 'postgres://martiuser:local123@postgis:5432/cot';
 
     TAKServer.configure();
 }
