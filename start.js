@@ -6,6 +6,7 @@ import DB from './lib/db.js'
 import User from './lib/user.js'
 import Config from './lib/config.js';
 import fetch from 'node-fetch';
+import fs from 'fs/promises';
 
 /**
  * @class
@@ -35,9 +36,23 @@ class TAKServer {
 
         await server.config.postgres(process.env.POSTGRES);
 
-        await Cert.root();
+        try {
+            await fs.access('/opt/tak/certs/files/ca.crl');
+        } catch (err) {
+            await Cert.root(server);
+        }
 
-        await Cert.gen('client', 'default');
+        try {
+            await fs.access('/opt/tak/certs/files/default.csr');
+        } catch (err) {
+            await Cert.gen('client', 'default');
+        }
+
+        try {
+            await fs.access('/opt/tak/certs/files/takserver.csr');
+        } catch (err) {
+            await Cert.gen('server', 'takserver');
+        }
 
         await DB.upgrade();
 
