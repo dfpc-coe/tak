@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM ubuntu:22.04
 
 EXPOSE 8080
 EXPOSE 8081
