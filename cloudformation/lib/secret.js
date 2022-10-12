@@ -9,7 +9,6 @@ export default {
                 GenerateSecretString: {
                     SecretStringTemplate: '{"username": "root"}',
                     GenerateStringKey: 'password',
-                    ExcludePunctuation: true,
                     PasswordLength: 32
                 },
                 Name: cf.join([cf.stackName, '/user/root']),
