@@ -8,7 +8,7 @@
     "description": "Deploy TAK into an AWS Account via Cloudformation",
     "main": "index.js",
     "scripts": {
-        "lint": "start.js lib/*.js scripts/*.js"
+        "lint": "eslint ./start.js lib/*.js"
     },
     "repository": {
         "type": "git",

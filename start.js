@@ -2,8 +2,8 @@
 import AWS from 'aws-sdk';
 import { $ } from 'zx';
 import Cert from './lib/certs.js';
-import DB from './lib/db.js'
-import User from './lib/user.js'
+import DB from './lib/db.js';
+import User from './lib/user.js';
 import Config from './lib/config.js';
 import fetch from 'node-fetch';
 import fs from 'fs/promises';
@@ -65,24 +65,25 @@ class TAKServer {
         } else {
             const secrets = new AWS.SecretsManager({ region: process.env.AWS_DEFAULT_REGION || 'us-east-1' });
 
-            const root = secrets.getSecretValue({
-                SecretId: `${server.stack}-root`
-            });
+            const user = JSON.parse((await secrets.getSecretValue({
+                SecretId: `${server.stack}/user/root`
+            }).promise()).SecretString);
 
-            await User.password('root', root.password);
+
+            await User.password(user.username, user.password);
         }
     }
 
     async start() {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-        process.env.JDK_JAVA_OPTIONS="-Dloader.path=WEB-INF/lib-provided,WEB-INF/lib,WEB-INF/classes,file:lib/ -Djava.net.preferIPv4Stack=true -Djava.security.egd=file:/dev/./urandom -DIGNITE_UPDATE_NOTIFIER=false -DIGNITE_QUIET=false"
+        process.env.JDK_JAVA_OPTIONS = '-Dloader.path=WEB-INF/lib-provided,WEB-INF/lib,WEB-INF/classes,file:lib/ -Djava.net.preferIPv4Stack=true -Djava.security.egd=file:/dev/./urandom -DIGNITE_UPDATE_NOTIFIER=false -DIGNITE_QUIET=false';
 
         $`java -Dspring.profiles.active=messaging,duplicatelogs -jar takserver.war&`;
         $`java -Dspring.profiles.active=api,duplicatelogs -jar takserver.war&`;
 
         do {
-            await delay(1000)
+            await delay(1000);
 
             try {
                 console.log('ok - checking server status...');
@@ -93,7 +94,7 @@ class TAKServer {
             } catch (err) {
                 console.log(`ok - server returned error: ${err.message}`);
             }
-        } while(true)
+        } while (true);
 
         console.log('ok - server started!');
     }
