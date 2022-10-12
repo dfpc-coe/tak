@@ -63,7 +63,7 @@ class TAKServer {
         if (server.is_local) {
             await User.password('root', 'Bugaboos2022!AlpineCl1mbing');
         } else {
-            const secrets = new AWS.SecretManager({ region: process.env.AWS_DEFAULT_REGION || 'us-east-1' });
+            const secrets = new AWS.SecretsManager({ region: process.env.AWS_DEFAULT_REGION || 'us-east-1' });
 
             const root = secrets.getSecretValue({
                 SecretId: `${server.stack}-root`

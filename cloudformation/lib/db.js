@@ -33,16 +33,17 @@ export default {
             Type: 'AWS::SecretsManager::SecretTargetAttachment',
             Properties: {
                 SecretId: cf.ref('DBMasterSecret'),
-                TargetId: cf.ref('DBInstanceVPC'),
+                TargetId: cf.ref('DBInstance'),
                 TargetType: 'AWS::RDS::DBInstance'
             }
-        }
-        DBInstanceVPC: {
+        },
+        DBInstance: {
             Type: 'AWS::RDS::DBInstance',
+            DependsOn: ['DBMasterSecret'],
             Properties: {
                 Engine: 'postgres',
                 EnablePerformanceInsights: true,
-                DBName: 'uploader',
+                DBName: 'cot',
                 DBInstanceIdentifier: cf.stackName,
                 KmsKeyId: cf.ref('KMS'),
                 EngineVersion: '14.2',
@@ -88,14 +89,15 @@ export default {
         DB: {
             Description: 'Postgres Connection String',
             Value: cf.join([
-                'postgresql://uploader',
+                'postgresql://',
+                cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:username:AWSCURRENT}}'),
                 ':',
-                cf.ref('DatabasePassword'),
+                cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:password:AWSCURRENT}}'),
                 '@',
-                cf.getAtt('DBInstanceVPC', 'Endpoint.Address'),
+                cf.getAtt('DBInstance', 'Endpoint.Address'),
                 ':',
-                cf.getAtt('DBInstanceVPC', 'Endpoint.Port'),
-                '/uploader'
+                cf.getAtt('DBInstance', 'Endpoint.Port'),
+                '/cot'
             ])
         }
     }

@@ -202,7 +202,7 @@ export default {
                             ':',
                             cf.sub('{{resolve:secretsmanager:${AWS::StackName}/rds/secret:SecretString:password:AWSCURRENT}}'),
                             '@',
-                            cf.getAtt('DBInstanceVPC', 'Endpoint.Address'),
+                            cf.getAtt('DBInstance', 'Endpoint.Address'),
                             ':5432/cot'
                         ]) },
                         { Name: 'STATE', Value: cf.ref('State') },
@@ -262,5 +262,11 @@ export default {
                 }]
             }
         }
-    }
+    },
+    Outputs: {
+        ELB: {
+            Description: 'API URL',
+            Value: cf.join(['http://', cf.getAtt('ELB', 'DNSName')])
+        }
+    }   
 };
