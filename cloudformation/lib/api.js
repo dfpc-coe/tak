@@ -192,6 +192,8 @@ export default {
                     Image: cf.join([cf.accountId, '.dkr.ecr.', cf.region, '.amazonaws.com/tak:', cf.ref('GitSha')]),
                     PortMappings: [{
                         ContainerPort: 8080
+                    },{
+                        ContainerPort: 8081
                     }],
                     Environment: [
                         { Name: 'StackName', Value: cf.stackName },
