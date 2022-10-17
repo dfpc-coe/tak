@@ -23,7 +23,7 @@
         "zx": "^7.1.0"
     },
     "devDependencies": {
-        "@mapbox/cloudfriend": "^5.1.1",
+        "@mapbox/cloudfriend": "^6.0.0",
         "@openaddresses/batch-alarms": "^2.1.4",
         "@openaddresses/deploy": "^7.0.0",
         "eslint": "^8.24.0",
